@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package clases;
+package GUI;
 
 /**
  *
- * @author Darwin Morocho
+ * @author KF
  */
 public class ParticionesSplinesCubicos {
 
