@@ -14,8 +14,7 @@ import java.util.Arrays;
 public class Hermite {
    Funcion hermite = new Funcion("x+1");
 
-   public double[] calcularTablitaChidori(double[] x, double[] y, double[] dx){
-        double[] coeficienteB = new double[x.length];
+   public double[][] calcularTablitaChidori(double[] x, double[] y, double[] dx){
         double[][] matriz = hermite.crearMatriz(x, y);
         int contadorDx=0;
        
@@ -30,19 +29,23 @@ public class Hermite {
                      }
             }
         }
-        
-        for (int i = 0; i < x.length; i++) {
+        hermite.imprimirMatriz(matriz, x.length);
+    return matriz;
+    }
+   
+    public double[] calcularCoe(double[][] matriz, int size){
+         double[] coeficienteB = new double[size];
+         for (int i = 0; i < size; i++) {
             coeficienteB[i] = matriz[i][i+1];
         }
-        System.out.println(Arrays.toString(coeficienteB));
-        hermite.imprimirMatriz(matriz, x.length);
-    return coeficienteB;
+          System.out.println(Arrays.toString(coeficienteB));
+        return coeficienteB;
     }
-    
+   
     public String getPolinomio(double[] x, double[] y, double[] dx){
             String factor = "(x-$)";
             String polinomio = "";
-            double[] bn = calcularTablitaChidori(x, y, dx);
+            double[] bn = calcularCoe(calcularTablitaChidori(x, y, dx), x.length);
 
             for (int i = 0; i < x.length; i++) {
                 if (bn[i] < 0) {
@@ -59,6 +62,14 @@ public class Hermite {
             }
             System.out.println(polinomio);
     return polinomio;
+    }
+
+    public Funcion getHermite() {
+        return hermite;
+    }
+
+    public void setHermite(Funcion hermite) {
+        this.hermite = hermite;
     }
     
    

@@ -3,9 +3,12 @@
  * and open the template in the editor.
  */
 package GUI;
+
 import clases.Funcion;
+import clases.Hermite;
 import clases.ImpresionPares;
 import clases.Lagrange;
+import clases.Newton;
 import clases.Polinomio;
 import graficador.myFrame;
 import java.awt.Desktop;
@@ -46,7 +49,7 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
  */
 public class Principal_frm extends javax.swing.JFrame {
 
-    boolean tercero=false;
+    boolean tercero = false;
     static int i;
     static int n;
     public static double componenteX[];
@@ -76,34 +79,31 @@ public class Principal_frm extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-          jPanelMuestraGrafica.setVisible(false);
-       puntoEvaluar.setVisible(false);
+        jPanelMuestraGrafica.setVisible(false);
+        puntoEvaluar.setVisible(false);
         ((JPanel) getContentPane()).setOpaque(false);
-      visualizar_grafica.setVisible(false);
+        visualizar_grafica.setVisible(false);
 //        JLabel fondo = new JLabel();
 //        getLayeredPane().add(fondo, JLayeredPane.FRAME_CONTENT_LAYER);
-    btnGraff.setEnabled(false);
+        btnGraff.setEnabled(false);
         jX.setVisible(false);
         jY.setVisible(false);
-numeroPuntos.setEnabled(false);
+        numeroPuntos.setEnabled(false);
         // al inicio del programa se muestran las casillas descativadas
         jX.setEnabled(false);
         jY.setEnabled(false);
         puntoEvaluar.setEnabled(false);
-       // jButtonEvaluarPunto.setEnabled(false);
-       jButtonEvaluarPunto.setVisible(false);
+        // jButtonEvaluarPunto.setEnabled(false);
+        jButtonEvaluarPunto.setVisible(false);
         jButtonregistrar.setEnabled(true);// se desavilitamos el boton registro de puntos
         visualizar_grafica.setEnabled(false);// se desavilitamos el boton visualizar grafica de puntos
         puntosIngresados.setEnabled(false);
-        
 
     }
 
     public Principal_frm(int g) {
     }
 
-    
-    
     /**
      * toma los valores ya dados en ls problemas
      *
@@ -158,41 +158,45 @@ numeroPuntos.setEnabled(false);
                 return valores;
             case 4:
                 //datos del problema 4 //f(x)=senx
-                valores = new double[2][3];
+                valores = new double[3][3];
                 valores[0][0] = 0;              //x0
                 valores[0][1] = Math.PI / 4;    //x1
                 valores[0][2] = Math.PI / 2;    //x2
 
-                valores[1][0] =  Math.cos(valores[0][0]); //yo
-                valores[1][1] =  Math.cos(valores[0][1]); //y1
-                valores[1][2] =  Math.sin(valores[0][2]); //y2
+                valores[1][0] = Math.sin(valores[0][0]); //yo
+                valores[1][1] = Math.sin(valores[0][1]); //y1
+                valores[1][2] = Math.sin(valores[0][2]); //y2
+                
+                valores[2][0] = Math.cos(valores[0][0]); //yo
+                valores[2][1] = Math.cos(valores[0][1]); //y1
+                valores[2][2] = Math.cos(valores[0][2]); //y2
 
                 return valores;
-                 case 5:
+            case 5:
                 //datos del problema 4 //f(x)=senx
                 valores = new double[2][4];
                 valores[0][0] = 0;              //x0
-                valores[0][1] =1;    //x1
-                valores[0][2] =2;    //x2
-                valores[0][3]=3;     //x3
-                
+                valores[0][1] = 1;    //x1
+                valores[0][2] = 2;    //x2
+                valores[0][3] = 3;     //x3
+
                 valores[1][0] = -1; //yo
                 valores[1][1] = 6; //y1
                 valores[1][2] = 31; //y2
-                valores[1][3]=98;   //y3
-                
-                return valores;
-                  case 6:
-                //datos del problema 4 //f(x)=senx
-                valores = new double[2][3];
-               /**
-                * falta hermite :v
-                * 
-                * 
-                */
+                valores[1][3] = 98;   //y3
 
                 return valores;
-                  case 7:
+            case 6:
+                //datos del problema 4 //f(x)=senx
+                valores = new double[2][3];
+                /**
+                 * falta hermite :v
+                 *
+                 *
+                 */
+
+                return valores;
+            case 7:
                 //datos del problema 4 //f(x)=senx
                 valores = new double[2][3];
                 valores[0][0] = -1;              //x0
@@ -204,9 +208,6 @@ numeroPuntos.setEnabled(false);
                 valores[1][2] = 6; //y2
 
                 return valores;
-                
-                
-                
 
             default:
                 JOptionPane.showMessageDialog(null, "ERROR");
@@ -231,26 +232,25 @@ numeroPuntos.setEnabled(false);
 
     }
 
-     public String d2(){
-          String r="";
-         if (tercero==true){
-               r="0.4748206017758918*x^2 -0.7458464571561131*x +1.0";
-           
-         }else{
-              r="-3.886694786383628*x^2 +4.676884835802445*x";
-         }
-        
+    public String d2() {
+        String r = "";
+        if (tercero == true) {
+            r = "0.4748206017758918*x^2 -0.7458464571561131*x +1.0";
+
+        } else {
+            r = "-3.886694786383628*x^2 +4.676884835802445*x";
+        }
+
         return r;
-        
+
     }
-    
-    
+
     /**
      * calculo de polinomio de lagrange con su respectivo error teorico y si es
      * necesario evaluar en un punto
      */
     public void Lagranja() {
-        double valores[][] = getValores();    
+        double valores[][] = getValores();
         int colum = 0;
         for (double[] pare : valores) {
             for (int c = 0; c < pare.length; c++) {
@@ -268,11 +268,10 @@ numeroPuntos.setEnabled(false);
 
         txtXY.setText(iniciales);
         txtPolinomio.setText(funci + "");
-        
+
     }
 
-    
-/**
+    /**
      * calcular el error con el valor xo dado calcular la aproximación con el
      * valor dado
      *
@@ -288,12 +287,12 @@ numeroPuntos.setEnabled(false);
                 colum = pare.length;
             }
         }
-        double ultimo = valores[1][colum-1];
+        double ultimo = valores[1][colum - 1];
         Lagrange lag = new Lagrange(valores);
         Polinomio funci = lag.metodo();
 
         double err = lag.error(colum, ultimo, eval, valores);
-        System.out.println(colum+"   "+ultimo+"   "+eval);
+        System.out.println(colum + "   " + ultimo + "   " + eval);
         String poli = "" + funci;
         Funcion f = new Funcion(poli);
 
@@ -303,22 +302,15 @@ numeroPuntos.setEnabled(false);
         return error;
 
     }
-    
-    
-    
-    
-    
- public void bot(){
-     btn2000.setVisible(false);
-     btn011.setVisible(false);
-      btn03.setVisible(false);
-     btn04.setVisible(false);
-     txtPE.setVisible(false);
- }
-    
- 
-    
-    
+
+    public void bot() {
+        btn2000.setVisible(false);
+        btn011.setVisible(false);
+        btn03.setVisible(false);
+        btn04.setVisible(false);
+        txtPE.setVisible(false);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -373,10 +365,22 @@ numeroPuntos.setEnabled(false);
         btnCalculinho = new javax.swing.JButton();
         btnGraff = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        btnNewton = new javax.swing.JButton();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        txtnewton = new javax.swing.JTextArea();
+        jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
+        btnHermite = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txtHermite = new javax.swing.JTextArea();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtPuntosH = new javax.swing.JTextArea();
+        jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        yitexarea = new javax.swing.JTextArea();
         cmbProblema = new javax.swing.JComboBox<>();
         btnSalir = new javax.swing.JButton();
 
@@ -651,38 +655,112 @@ numeroPuntos.setEnabled(false);
 
         pnelMetodos.addTab("Lagrange", jPanel1);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 627, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
-        );
+        btnNewton.setText("Calcular Polinomio Newton");
+        btnNewton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNewtonActionPerformed(evt);
+            }
+        });
 
-        pnelMetodos.addTab("Diferencias Divididas", jPanel2);
+        txtnewton.setColumns(20);
+        txtnewton.setRows(5);
+        jScrollPane6.setViewportView(txtnewton);
+
+        jLabel8.setText("Polinomio");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 627, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(btnNewton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 418, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(btnNewton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(147, 147, 147))
         );
 
         pnelMetodos.addTab("Newton", jPanel3);
 
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setText("Calcular Polinomio");
-        jPanel5.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+        btnHermite.setText("Calcular Polinomio");
+        btnHermite.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHermiteActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnHermite, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, -1, -1));
+
+        txtHermite.setColumns(20);
+        txtHermite.setRows(5);
+        jScrollPane4.setViewportView(txtHermite);
+
+        jPanel5.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 590, 60));
+
+        jLabel5.setText("Puntos a evaluar");
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+
+        txtPuntosH.setColumns(20);
+        txtPuntosH.setRows(5);
+        jScrollPane3.setViewportView(txtPuntosH);
+
+        jPanel5.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 410, 130));
 
         pnelMetodos.addTab("Hermite", jPanel5);
+
+        jButton1.setText("Calcular Tabla");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        yitexarea.setColumns(20);
+        yitexarea.setRows(5);
+        jScrollPane5.setViewportView(yitexarea);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pnelMetodos.addTab("Diferencias Divididas", jPanel2);
 
         cmbProblema.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Problema 1", "Problema 2", "Problema 3", "Problema 4", "Problema 5", "Problema 6", "problema 7" }));
 
@@ -737,7 +815,7 @@ numeroPuntos.setEnabled(false);
     }// </editor-fold>//GEN-END:initComponents
 
     private void visualizar_graficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_visualizar_graficaActionPerformed
-       
+
     }//GEN-LAST:event_visualizar_graficaActionPerformed
 
     public static double[] getComponenteX() {
@@ -781,8 +859,8 @@ numeroPuntos.setEnabled(false);
     }
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-     System.exit(0);
-        
+        System.exit(0);
+
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void puntoEvaluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_puntoEvaluarActionPerformed
@@ -799,29 +877,23 @@ numeroPuntos.setEnabled(false);
 
     private void jButtonregistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonregistrarActionPerformed
 
-        
         visualizar_grafica.setVisible(false);
-        double valores[][]=getValores();
-         int colum=0;
+        double valores[][] = getValores();
+        int colum = 0;
         for (double[] pare : valores) {
             for (int c = 0; c < pare.length; c++) {
                 colum = pare.length;
             }
         }
-        numeroPuntos.setText(colum+"");
-        
-      
-            Principal_frm.setN(Integer.parseInt(numeroPuntos.getText()));
-            numeroPuntos.setEnabled(false);// desavilita la edicion del campo en donde se ingresa el numero de puntos
-            Principal_frm.componenteX = new double[n];
-            Principal_frm.componenteY = new double[n];
+        numeroPuntos.setText(colum + "");
 
-            jTextArea.setText("");
+        Principal_frm.setN(Integer.parseInt(numeroPuntos.getText()));
+        numeroPuntos.setEnabled(false);// desavilita la edicion del campo en donde se ingresa el numero de puntos
+        Principal_frm.componenteX = new double[n];
+        Principal_frm.componenteY = new double[n];
 
-        
-        
-        
-        
+        jTextArea.setText("");
+
 // double valores[][]=getValores();
 //         int colum=0;
 //        for (double[] pare : valores) {
@@ -830,54 +902,52 @@ numeroPuntos.setEnabled(false);
 //            }
 //        }
 //        numeroPuntos.setText(colum+"");
-        
-        for(int k=0;k<colum;k++){
-            jX.setText(valores[0][k]+"");
-            jY.setText(valores[1][k]+"");
-        
-        
-        try {
-            Principal_frm m = new Principal_frm(0);
-            int n = Principal_frm.getN();
+        for (int k = 0; k < colum; k++) {
+            jX.setText(valores[0][k] + "");
+            jY.setText(valores[1][k] + "");
 
-            if (m.getI() < n) {// si los punts ingresados son menores que n  permite el ingreso de otro punto
-                JEP b1 = new JEP();
-                b1.addStandardFunctions(); // adiciona las funciones matem´aticas
-                b1.addStandardConstants();
-                b1.parseExpression(jX.getText()); // paso de la expresi´on a evaluar
-                componenteX[m.getI()] = b1.getValue();// almacena en el en la poicion i del arreglo el valor ingresado en jText de la componente en x
+            try {
+                Principal_frm m = new Principal_frm(0);
+                int n = Principal_frm.getN();
 
-                b1.parseExpression(jY.getText()); // paso de la expresi´on a evaluar
-                componenteY[m.getI()] = b1.getValue();// almacena en el en la poicion i del arreglo el valor ingresado en jText de la componente en y
+                if (m.getI() < n) {// si los punts ingresados son menores que n  permite el ingreso de otro punto
+                    JEP b1 = new JEP();
+                    b1.addStandardFunctions(); // adiciona las funciones matem´aticas
+                    b1.addStandardConstants();
+                    b1.parseExpression(jX.getText()); // paso de la expresi´on a evaluar
+                    componenteX[m.getI()] = b1.getValue();// almacena en el en la poicion i del arreglo el valor ingresado en jText de la componente en x
 
-                String puntos = " ( " + jX.getText() + " , " + jY.getText() + " ) ";// variable usada para mostratr en pantala el punto regitrado
-                String coma = ",";
-                if (m.getI() + 1 == n) {
-                    coma = "";
+                    b1.parseExpression(jY.getText()); // paso de la expresi´on a evaluar
+                    componenteY[m.getI()] = b1.getValue();// almacena en el en la poicion i del arreglo el valor ingresado en jText de la componente en y
+
+                    String puntos = " ( " + jX.getText() + " , " + jY.getText() + " ) ";// variable usada para mostratr en pantala el punto regitrado
+                    String coma = ",";
+                    if (m.getI() + 1 == n) {
+                        coma = "";
+                    }
+
+                    puntosIngresados.setText(puntosIngresados.getText() + puntos + coma);//muestra en pantalla los puntos registrados
+                    jX.setText("");// limpia la casilla de la componente en x del punto ngresado
+                    jY.setText("");// limpia la casilla de la componente en y del punto ngresado
+
+                    if (m.getI() + 1 == n) {// si ya se ingreso el numero de puntos establecidos se bloquea el boton  Registrar
+
+                        this.splines(n);
+                        jButtonregistrar.setEnabled(false);
+                        // acontinuacion desabilitamos las casillas de ingreso de puntos
+                        jX.setEnabled(false);
+                        jY.setEnabled(false);
+                        visualizar_grafica.setEnabled(true);// avilitamos el boton visualizar grafica de puntos
+                    }
+
+                    m.setI(m.getI() + 1);//aumenta el contador de ingreso de puntos
                 }
 
-                puntosIngresados.setText(puntosIngresados.getText() + puntos + coma);//muestra en pantalla los puntos registrados
-                jX.setText("");// limpia la casilla de la componente en x del punto ngresado
-                jY.setText("");// limpia la casilla de la componente en y del punto ngresado
-
-                if (m.getI() + 1 == n) {// si ya se ingreso el numero de puntos establecidos se bloquea el boton  Registrar
-
-                    this.splines(n);
-                    jButtonregistrar.setEnabled(false);
-                    // acontinuacion desabilitamos las casillas de ingreso de puntos
-                    jX.setEnabled(false);
-                    jY.setEnabled(false);
-                    visualizar_grafica.setEnabled(true);// avilitamos el boton visualizar grafica de puntos
-                }
-
-                m.setI(m.getI() + 1);//aumenta el contador de ingreso de puntos
+            }// fin try// fin try// fin try// fin try
+            catch (Exception e) {
+                jTextArea.setText("error en el ingreso de los puntos");
             }
 
-        }// fin try// fin try// fin try// fin try
-        catch (Exception e) {
-            jTextArea.setText("error en el ingreso de los puntos");
-        }
-        
         }//cierre de ciclo for
         puntosIngresados.setEnabled(true);
     }//GEN-LAST:event_jButtonregistrarActionPerformed
@@ -887,62 +957,62 @@ numeroPuntos.setEnabled(false);
     }//GEN-LAST:event_txtXYActionPerformed
 
     private void btnCalculinhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculinhoActionPerformed
-          
+
         txtErr.setText("");
-         txtEval.setText("");
+        txtEval.setText("");
         int funcion = cmbProblema.getSelectedIndex() + 1;
         switch (funcion) {
             case 1:
-              MostrarbotonesM();
+                MostrarbotonesM();
                 btn2.setVisible(false);
                 Lagranja();
                 btn4.setVisible(false);
-       btnGraff.setEnabled(false);
+                btnGraff.setEnabled(false);
                 break;
-             
+
             case 2:
                 Ocultarbotones1();
                 btn4.setVisible(false);
                 btn2.setVisible(true);
-             bot();
-              btnGraff.setEnabled(false);
+                bot();
+                btnGraff.setEnabled(false);
                 break;
             case 3:
-                  Lagranja();
+                Lagranja();
                 Ocultarbotones1();
                 btn4.setVisible(false);
                 btn2.setVisible(false);
-                 tercero=true;
-                  btnGraff.setEnabled(true);
-                  bot();
+                tercero = true;
+                btnGraff.setEnabled(true);
+                bot();
                 break;
             case 4:
-                  Lagranja();
+                Lagranja();
                 Ocultarbotones1();
                 btn2.setVisible(false);
                 btn4.setVisible(true);
-                 tercero=false;
-      btnGraff.setEnabled(true);
-                  bot();
+                tercero = false;
+                btnGraff.setEnabled(true);
+                bot();
                 break;
-                   case 5:
+            case 5:
                 Ocultarbotones1();
                 btn2.setVisible(false);
                 btn4.setVisible(false);
                 btnGraff.setEnabled(false);
-           bot();
+                bot();
                 break;
-                  case 6:
+            case 6:
                 Ocultarbotones1();
                 btn2.setVisible(false);
                 btn4.setVisible(false);
-             bot();
+                bot();
                 break;
-                  case 7:
+            case 7:
                 Ocultarbotones1();
                 btn2.setVisible(false);
                 btn4.setVisible(false);
-             bot();
+                bot();
                 break;
 
         }
@@ -950,55 +1020,55 @@ numeroPuntos.setEnabled(false);
     }//GEN-LAST:event_btnCalculinhoActionPerformed
 
     private void btn11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn11ActionPerformed
- double eval;
+        double eval;
         String val = btn11.getText();
         eval = Double.parseDouble(val);
         double[] err = evalErr(eval);
         txtErr.setText("");
-         txtEval.setText("");
+        txtEval.setText("");
         txtErr.setText(err[0] + "");
-       
+
         txtEval.setText(err[1] + "");        // TODO add your handling code here:
     }//GEN-LAST:event_btn11ActionPerformed
 
     private void btn12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn12ActionPerformed
- double eval;
+        double eval;
         String val = btn12.getText();
         eval = Double.parseDouble(val);
         double[] err = evalErr(eval);
         txtErr.setText("");
-         txtEval.setText("");
+        txtEval.setText("");
         txtErr.setText(err[0] + "");
-       
+
         txtEval.setText(err[1] + "");        // TODO add your handling code here:
     }//GEN-LAST:event_btn12ActionPerformed
 
     private void btn13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn13ActionPerformed
- double eval;
+        double eval;
         String val = btn13.getText();
         eval = Double.parseDouble(val);
         double[] err = evalErr(eval);
         txtErr.setText("");
-         txtEval.setText("");
+        txtEval.setText("");
         txtErr.setText(err[0] + "");
-       
+
         txtEval.setText(err[1] + "");        // TODO add your handling code here:
     }//GEN-LAST:event_btn13ActionPerformed
 
     private void btn14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn14ActionPerformed
- double eval;
+        double eval;
         String val = btn14.getText();
         eval = Double.parseDouble(val);
         double[] err = evalErr(eval);
         txtErr.setText("");
-         txtEval.setText("");
+        txtEval.setText("");
         txtErr.setText(err[0] + "");
-       
+
         txtEval.setText(err[1] + "");        // TODO add your handling code here:
     }//GEN-LAST:event_btn14ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
-    double eval=Math.PI/6;
+        double eval = Math.PI / 6;
         double[] err = evalErr(eval);
         txtErr.setText("");
         txtErr.setText(err[0] + "");
@@ -1007,7 +1077,7 @@ numeroPuntos.setEnabled(false);
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
- double eval;
+        double eval;
         String val = btn2.getText();
         eval = Double.parseDouble(val);
         double[] err = evalErr(eval);
@@ -1018,8 +1088,8 @@ numeroPuntos.setEnabled(false);
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn02ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn02ActionPerformed
-  jButtonEvaluarPunto.setVisible(false);
-        numeroPuntos.setEnabled(false);        
+        jButtonEvaluarPunto.setVisible(false);
+        numeroPuntos.setEnabled(false);
         puntosIngresados.setText("");
         Principal_frm m = new Principal_frm(0);
         m.setI(0);
@@ -1030,8 +1100,7 @@ numeroPuntos.setEnabled(false);
         Principal_frm.cj = null;
         Principal_frm.dj = null;
         numeroPuntos.setText("");
-       
-      
+
         jX.setEnabled(false);
         jY.setEnabled(false);
         puntoEvaluar.setText("");
@@ -1045,7 +1114,7 @@ numeroPuntos.setEnabled(false);
 
     private void btn011ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn011ActionPerformed
 
-puntoEvaluar.setText(btn011.getText());
+        puntoEvaluar.setText(btn011.getText());
         try {
             boolean mensaje = false;
             JEP b1 = new JEP();
@@ -1069,15 +1138,14 @@ puntoEvaluar.setText(btn011.getText());
             }
         } catch (Exception e) {
             jTextField_S_X.setText("error el el ingreso del punto a evaluar");
-        }      
-        
-        
-        
+        }
+
+
     }//GEN-LAST:event_btn011ActionPerformed
 
     private void btn03ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn03ActionPerformed
-       
-puntoEvaluar.setText(btn03.getText());
+
+        puntoEvaluar.setText(btn03.getText());
         try {
             boolean mensaje = false;
             JEP b1 = new JEP();
@@ -1101,13 +1169,13 @@ puntoEvaluar.setText(btn03.getText());
             }
         } catch (Exception e) {
             jTextField_S_X.setText("error el el ingreso del punto a evaluar");
-        }      
-        
+        }
+
     }//GEN-LAST:event_btn03ActionPerformed
 
     private void btn04ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn04ActionPerformed
 
-puntoEvaluar.setText(btn04.getText());
+        puntoEvaluar.setText(btn04.getText());
         try {
             boolean mensaje = false;
             JEP b1 = new JEP();
@@ -1131,13 +1199,13 @@ puntoEvaluar.setText(btn04.getText());
             }
         } catch (Exception e) {
             jTextField_S_X.setText("error el el ingreso del punto a evaluar");
-        }      
-                // TODO add your handling code here:
+        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_btn04ActionPerformed
 
     private void btn2000ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2000ActionPerformed
 
-puntoEvaluar.setText(btn2000.getText());
+        puntoEvaluar.setText(btn2000.getText());
         try {
             boolean mensaje = false;
             JEP b1 = new JEP();
@@ -1161,8 +1229,8 @@ puntoEvaluar.setText(btn2000.getText());
             }
         } catch (Exception e) {
             jTextField_S_X.setText("error el el ingreso del punto a evaluar");
-        }      
-                // TODO add your handling code here:
+        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_btn2000ActionPerformed
 
     private void jButtonEvaluarPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEvaluarPuntoActionPerformed
@@ -1198,23 +1266,106 @@ puntoEvaluar.setText(btn2000.getText());
 
         pnelMetodos.setVisible(false);
         btnSalir.setVisible(true);
-       cmbProblema.setVisible(false);
-         
-            setSize(900,690);//500,350
-            setTitle("interfaz grafica");
-            setDefaultCloseOperation(EXIT_ON_CLOSE);
-            setResizable(false);
-     
-            Container Contenedor = getContentPane();
-          
-            GraficadorClasico mipanel = new GraficadorClasico(Contenedor);
-           
-            this.add(mipanel);
-   
-            setVisible(true);
-       
-        
+        cmbProblema.setVisible(false);
+
+        setSize(900, 690);//500,350
+        setTitle("interfaz grafica");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
+
+        Container Contenedor = getContentPane();
+
+        GraficadorClasico mipanel = new GraficadorClasico(Contenedor);
+
+        this.add(mipanel);
+
+        setVisible(true);
+
+
     }//GEN-LAST:event_btnGraffActionPerformed
+
+    private void btnHermiteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHermiteActionPerformed
+        int problema = cmbProblema.getSelectedIndex() + 1;
+        Hermite hermite = new Hermite();
+        Funcion funcion = new Funcion("x+1");
+        String polinomio;
+        txtHermite.setText("");
+        txtPuntosH.setText("");
+         double[][] matriz;
+        switch (problema) {
+            case 1:
+                double x[] = {1910.0, 1910.0, 1930.0, 1930.0, 1950.0, 1950.0, 1960.0, 1960.0, 1980.0, 1980.0},
+                 y[] = {125350.0, 125350.0, 133420.0, 133420.0, 117183.0, 117183.0, 120323.0, 120323.0, 145311.0, 145311.0},
+                 dx[] = {125963, 147852, 258963, 159357, 248539};
+                String[] puntos = {"1964.0", "2000.0", "2010.0", "2018.0"};
+
+                polinomio = hermite.getPolinomio(x, y, dx);
+                String punto;
+                for (int j = 0; j < 4; j++) {
+                    punto = String.valueOf(funcion.evaluarFuncion(Double.parseDouble(puntos[j]), polinomio));
+                    txtPuntosH.append("P(" + puntos[j] + ") = " + punto + "\n");
+                    System.out.println(punto);
+                }
+                txtHermite.append("p(x) = " + polinomio);
+                break;
+
+            case 3:
+                matriz = getValores();
+                double x3[] = {matriz[0][0], matriz[0][0], matriz[0][1], matriz[0][1], matriz[0][2], matriz[0][2]},
+                 y3[] = {matriz[1][0], matriz[1][0], matriz[1][1], matriz[1][1], matriz[1][2], matriz[1][2]},
+                 dx3[] = {0, -3.255475136, 2.277363696};
+
+               polinomio = hermite.getPolinomio(x3, y3, dx3);
+                
+               
+                txtHermite.append("p(x) = " + polinomio);
+                break;
+                
+            case 4:
+                matriz = getValores();
+                 double x4[] = {matriz[0][0], matriz[0][0], matriz[0][1], matriz[0][1], matriz[0][2], matriz[0][2]},
+                 y4[] = {matriz[1][0], matriz[1][0], matriz[1][1], matriz[1][1], matriz[1][2], matriz[1][2]},
+                 dx4[] = {matriz[2][0], matriz[2][1], matriz[2][2]};
+                 
+                 polinomio = hermite.getPolinomio(x4, y4, dx4);
+                
+                txtPuntosH.append("p(pi/6) = "+String.valueOf(funcion.evaluarFuncion(Math.PI/6, polinomio)));
+                txtHermite.append("p(x) = " + polinomio);
+            break;
+        }
+
+    }//GEN-LAST:event_btnHermiteActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        double x[] = {1910.0, 1910.0, 1930.0, 1930.0, 1950.0, 1950.0, 1960.0, 1960.0, 1980.0, 1980.0},
+                y[] = {125350.0, 125350.0, 133420.0, 133420.0, 117183.0, 117183.0, 120323.0, 120323.0, 145311.0, 145311.0},
+                dx[] = {125963, 147852, 258963, 159357, 248539};
+
+        Hermite hermite = new Hermite();
+        double[][] matriz = hermite.calcularTablitaChidori(x, y, dx);
+
+        for (int j = 0; j < x.length; j++) {
+            for (int k = 0; k < x.length+1; k++) {
+                yitexarea.append(Double.toString(matriz[j][k]) + " | ");
+            }
+            yitexarea.append("\n");
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnNewtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewtonActionPerformed
+      txtnewton.setText("");
+        Newton newton = new Newton();
+        int opcion = cmbProblema.getSelectedIndex()+1;
+        if (opcion > 0 && opcion < 5) {
+        double[][] matriz = getValores();
+        double x[] = {matriz[0][0], matriz[0][1], matriz[0][2]},
+               y[] = {matriz[1][0], matriz[1][1], matriz[1][2]};
+        
+        txtnewton.append(newton.getPolinomio(x, y));
+        }
+        
+    }//GEN-LAST:event_btnNewtonActionPerformed
 
     public void splines(int n1) {
         boolean mensaje = false;
@@ -1228,30 +1379,16 @@ puntoEvaluar.setText(btn2000.getText());
             // AC=b
             double h[] = new double[puntos];
 
-
-
-
             for (int i = 0; i < puntos - 1; i++) {
                 h[i] = x[i + 1] - x[i];
             }
 
-
-
             double b[] = new double[puntos];
 
-
-
             /**
-             * paso a cargar la matriz b 
-             * |-                                           -|
-             * |         0                                   |
-             * | 3(x2-x1)/h1 - 3(x1-x0)/h0                   |
-             * |       .                                     | 
-             * |       .                                     |
-             * |       .                                     | =b, con i=0,...,n-1 | . |
-             * | 3(Xn - Xn-1)/(hn-1) - 3(Xn-1 - Xn-2)/(hn-2) |
-             * |          0                                  |
-             * |-                                           -|(n+1)x1
+             * paso a cargar la matriz b |- -| | 0 | | 3(x2-x1)/h1 - 3(x1-x0)/h0
+             * | | . | | . | | . | =b, con i=0,...,n-1 | . | | 3(Xn -
+             * Xn-1)/(hn-1) - 3(Xn-1 - Xn-2)/(hn-2) | | 0 | |- -|(n+1)x1
              */
             b[0] = 0;
             b[puntos - 1] = 0;
@@ -1260,25 +1397,15 @@ puntoEvaluar.setText(btn2000.getText());
 
             }// fin cargar matriz b
 
-
-
-
-
-
-
             // 
             double matrizA[][] = new double[puntos][puntos];// de orden nxn, con i=0,...,n-1
             /**
-             * |-                                                  -|
-             * | 1            0 ................................. 0 | 
-             * | h0      2(h0+h1)    h1 ................          0 | 
-             * | 0          h1   2(h1+h2)     h2 ................ 0 |
-             * | 0           0  .....................  .  0       1 |
-             * | 0           0             hn-2  2(hn-2 +hn-1) hn-1 |
-             * |-                                                  -| (n+1)x(n+1)
-                 
-                 * A=matrizA, con i=0,...,n-1  
-             
+             * |- -| | 1 0 ................................. 0 | | h0 2(h0+h1)
+             * h1 ................ 0 | | 0 h1 2(h1+h2) h2 ................ 0 | |
+             * 0 0 ..................... . 0 1 | | 0 0 hn-2 2(hn-2 +hn-1) hn-1 |
+             * |- -| (n+1)x(n+1)
+             *
+             * A=matrizA, con i=0,...,n-1              *
              */
             matrizA[0][0] = 1;
             matrizA[puntos - 1][puntos - 1] = 1;
@@ -1290,11 +1417,7 @@ puntoEvaluar.setText(btn2000.getText());
                 matrizA[puntos - 1][i] = 0;
             }
 
-
-
             // paso a cargar la matrizA  desde la fila i asta la fila n,  con  i=1,...n
-
-
             for (int i = 1; i < puntos; i++) {
                 for (int j = 1; j < puntos - 1; j++) {
 
@@ -1309,9 +1432,6 @@ puntoEvaluar.setText(btn2000.getText());
             }// fin bucle i
             // fin cargar la matirzA 
 
-
-
-
             /**
              * la matrizA1 es de dimension (puntos-2)x(puntos-2), usada para
              * resolver el sistema de e uaciones para en contrar las incognitas
@@ -1325,21 +1445,12 @@ puntoEvaluar.setText(btn2000.getText());
                 }// fin buqle j
             }// bucle i
 
-
-
-
-
-
-
             int n = puntos - 2;
             double r[] = new double[n];// carreglo que almacenara los valores de Cji  desde i=1,...,n-2
             for (int l = 0; l < n; l++) {
                 r[l] = b[l + 1];
 
             }
-
-
-
 
             /**
              * acontinuacion usamos el metodo de caus jordan para encontar los
@@ -1363,24 +1474,11 @@ puntoEvaluar.setText(btn2000.getText());
                 }/// buble x1
             }// fin bucle i
 
-
-
-
-
             /**
              * nesitamos que la matriz C sea de la forma
              *
-             * |- -| 
-             * | 0 |
-             * | 1 |
-             * | 1 |
-             * | . |
-             * | . | =C
-             * | . |
-             * | . |
-             * | 1 |
-             * | 0 |
-             * |- -|(n+1)x1 Note que por las condiciones de frotera las componentes
+             * |- -| | 0 | | 1 | | 1 | | . | | . | =C | . | | . | | 1 | | 0 | |-
+             * -|(n+1)x1 Note que por las condiciones de frotera las componentes
              * Cjo=0 y Cjn=0
              */
             double cj[] = new double[puntos];
@@ -1389,8 +1487,6 @@ puntoEvaluar.setText(btn2000.getText());
             for (int i = 1; i < puntos - 1; i++) {
                 cj[i] = r[i - 1];
             }
-
-
 
             /**
              * los polinomios de Splin cubicos esta dadas por la siguiente
@@ -1404,24 +1500,19 @@ puntoEvaluar.setText(btn2000.getText());
                 dj[i] = (cj[i + 1] - cj[i]) / (3 * h[i]);
             }
 
-
-
             for (int j = 0; j < puntos - 1; j++) {
                 String signo = "-";
                 if (x[j] < 0) {
                     signo = "";
-               
-                }
-               String cadena=y[j] + " + (" + bj[j] + ")(x" + j + signo + x[j] + ")  +  (" + cj[j] + ")(x" + j + signo + x[j] + ")^2 + ( " + dj[j] + ")(x" + j + signo + x[j] + ")^3";
 
-                String salida="S" + j + "(x)= " + y[j] + " + (" + bj[j] + ")(x" + j + signo + x[j] + ")  +  (" + cj[j] + ")(x" + j + signo + x[j] + ")^2 + ( " + dj[j] + ")(x" + j + signo + x[j] + ")^3\n";
+                }
+                String cadena = y[j] + " + (" + bj[j] + ")(x" + j + signo + x[j] + ")  +  (" + cj[j] + ")(x" + j + signo + x[j] + ")^2 + ( " + dj[j] + ")(x" + j + signo + x[j] + ")^3";
+
+                String salida = "S" + j + "(x)= " + y[j] + " + (" + bj[j] + ")(x" + j + signo + x[j] + ")  +  (" + cj[j] + ")(x" + j + signo + x[j] + ")^2 + ( " + dj[j] + ")(x" + j + signo + x[j] + ")^3\n";
                 System.out.println(salida);
 
                 jTextArea.append(salida);
             }
-
-
-
 
             Principal_frm.cj = cj;
             Principal_frm.bj = bj;
@@ -1435,7 +1526,6 @@ puntoEvaluar.setText(btn2000.getText());
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, "error lectura de datos");
         }
-
 
     }// fin del metodo splines
 
@@ -1490,6 +1580,8 @@ puntoEvaluar.setText(btn2000.getText());
     private javax.swing.JButton btn4;
     private javax.swing.JButton btnCalculinho;
     private javax.swing.JButton btnGraff;
+    private javax.swing.JButton btnHermite;
+    private javax.swing.JButton btnNewton;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cmbProblema;
     private javax.swing.JButton jButton1;
@@ -1502,8 +1594,10 @@ puntoEvaluar.setText(btn2000.getText());
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1512,6 +1606,10 @@ puntoEvaluar.setText(btn2000.getText());
     private javax.swing.JPanel jPanelMuestraGrafica;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextArea jTextArea;
@@ -1524,9 +1622,13 @@ puntoEvaluar.setText(btn2000.getText());
     private javax.swing.JTextField puntosIngresados;
     private javax.swing.JTextField txtErr;
     private javax.swing.JTextField txtEval;
+    private javax.swing.JTextArea txtHermite;
     private javax.swing.JLabel txtPE;
     private javax.swing.JTextArea txtPolinomio;
+    private javax.swing.JTextArea txtPuntosH;
     private javax.swing.JTextField txtXY;
+    private javax.swing.JTextArea txtnewton;
     private javax.swing.JButton visualizar_grafica;
+    private javax.swing.JTextArea yitexarea;
     // End of variables declaration//GEN-END:variables
 }
